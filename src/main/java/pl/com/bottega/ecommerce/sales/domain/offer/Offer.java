@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Offer {
 
+	OfferItem offerItem;
     private List<OfferItem> availableItems = new ArrayList<OfferItem>();
 
     private List<OfferItem> unavailableItems = new ArrayList<OfferItem>();
@@ -61,17 +62,17 @@ public class Offer {
      *            acceptable difference in percent
      * @return
      */
-    public boolean sameAs(Offer seenOffer, double delta) {
-        if (availableItems.size() != seenOffer.availableItems.size()) {
+    public boolean sameAs(OfferItem seenOffer,  double delta) {
+        if (availableItems.size() != this.availableItems.size()) {
             return false;
         }
 
         for (OfferItem item : availableItems) {
-            OfferItem sameItem = seenOffer.findItem(item.getProductId());
+            OfferItem sameItem = this.findItem(item.productForOffer.getProductId());
             if (sameItem == null) {
                 return false;
             }
-            if (!sameItem.sameAs(item, delta)) {
+            if (!this.sameAs(item, delta)) {
                 return false;
             }
         }
@@ -81,7 +82,7 @@ public class Offer {
 
     private OfferItem findItem(String productId) {
         for (OfferItem item : availableItems) {
-            if (item.getProductId().equals(productId)) {
+            if (item.productForOffer.getProductId().equals(productId)) {
                 return item;
             }
         }
